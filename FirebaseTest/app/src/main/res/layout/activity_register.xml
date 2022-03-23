@@ -22,12 +22,33 @@
         android:layout_marginTop="10dp"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_below="@+id/password"
         android:text="Register"
-        android:id="@+id/register" />
+        android:id="@+id/register"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already an user? Go login"
+        android:layout_below="@+id/register"
+        android:textColor="#818285"
+        android:textSize="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/askuserloginatregister"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_below="@+id/askuserloginatregister"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/loginatregister"/>
+
+
 
 
 </RelativeLayout>

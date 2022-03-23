@@ -16,16 +16,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter password"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/password"
         android:layout_below="@+id/email"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/login"
         android:layout_below="@id/password"
         android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
         android:text="Login"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not a user yet? Register for an account to proceed."
+        android:layout_below="@+id/login"
+        android:textColor="#818285"
+        android:textSize="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/askuserregister"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:layout_below="@+id/askuserregister"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/registeratlogin"/>
 
 </RelativeLayout>
