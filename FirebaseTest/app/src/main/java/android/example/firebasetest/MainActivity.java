@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         logoutbtn = (Button) findViewById(R.id.logoutbtn);
         logoutbtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
@@ -28,5 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("ProgrammingKnowledge");
     }
 }
