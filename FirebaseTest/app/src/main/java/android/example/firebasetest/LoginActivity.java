@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email_str = email.getText().toString();
                 String pw_str = pw.getText().toString();
                 loginUser(email_str,pw_str);
+
             }
         });
     }
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));  //Intent from LoginActivity to MainActivity
+                startActivity(new Intent(LoginActivity.this, AddRpi.class));  //Intent from LoginActivity to Main
                 finish();
             }
         });
