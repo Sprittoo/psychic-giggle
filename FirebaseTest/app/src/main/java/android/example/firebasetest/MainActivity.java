@@ -41,9 +41,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {  //snapshot of the "blabla@gmail" branch
                 list.clear();     //<- clear list to prevent repeated entries when new cam ip is added
+
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    list.add(snapshot.getValue().toString());    <-- WE GET THE IP FROM getValue()
-                    list.add(snapshot.getKey());
+
+                    Devices device = new Devices(snapshot.getKey(), snapshot.getValue().toString());   // <-- Created a helper class to get the device name and ip
+                    String camName = device.getCamName();
+                    String ip = device.getIp();
+                    list.add(camName + " : " + ip);
+
+//                    list.add(snapshot.getValue().toString());    <--  getValue() = Getting the ip
+//                    list.add(snapshot.getKey());    // <-- getKey() = Getting the name
+
+
                 }
                 adapter.notifyDataSetChanged();
             }
