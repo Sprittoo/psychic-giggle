@@ -3,13 +3,20 @@ package android.example.firebasetest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,20 +28,62 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listview;
-    private Button listbtn;
+    private Button logoutbtn;
+    private Button addbtn;
+    FirebaseAuth auth;
+    private String URl;
+    private WebView web;
+    public String name_IP;
+    public String currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listview = findViewById(R.id.listview);
-        listbtn = findViewById(R.id.listbtn);
+        logoutbtn = findViewById(R.id.logoutbtn);
+        addbtn = findViewById(R.id.addbtn);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String email = firebaseUser.getEmail();
+        CurrentUser user = new CurrentUser(email);
+        currentUser = user.getUserName();
+
+
+
+        addbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AddRpiActivity.class));
+            }
+        });
+        logoutbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser).removeValue();
+                finish();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                auth.signOut();
+            }
+        });
 
 
 
         final ArrayList<String> list = new ArrayList<>();
         final ArrayAdapter adapter = new ArrayAdapter<String>(MainActivity.this,R.layout.rpi_list,list);
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(MainActivity.this,"Clicked!" , Toast.LENGTH_SHORT).show(); //LINK HERE TO START WEBVIEW
+//                startActivity(new Intent(MainActivity.this, WebActivity.class));
+                name_IP = adapterView.getItemAtPosition(i).toString();  // <-- OMG I GOT IT NOW I KNOW THE IP AND NAME AS  A STRING
+                Toast.makeText(MainActivity.this,name_IP , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                intent.putExtra("NameAndIP",name_IP);
+                startActivity(intent);
+            }
+        });
 
         DatabaseReference userdata = FirebaseDatabase.getInstance().getReference().child("Users").child("blabla@gmail").child("Cameras");  // <- the name of branch to retrive data
         userdata.addValueEventListener(new ValueEventListener() {
@@ -61,13 +110,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 ;
-            }
-        });
-
-        listbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, list.toString(),Toast.LENGTH_SHORT ).show();
             }
         });
 
